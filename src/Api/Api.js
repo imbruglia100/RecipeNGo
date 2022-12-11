@@ -18,18 +18,18 @@ const recipeApi = {
   },
 
   getByIngredients: async (ingredients) => {
-    const querySearchIngredients = ingredients.join("%2C");
-    fetch(
+    const querySearchIngredients = ingredients.join("%2C").split(" ").join('');
+    return await fetch(
       `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients=${querySearchIngredients}&number=5&ignorePantry=true&ranking=1`,
       options
     )
       .then((response) => response.json())
-      .then((response) => response.recipes)
+      .then((response) => response)
       .catch((err) => console.error(err));
   },
 
   getById: async (id) => {
-    await fetch(
+    return await fetch(
       `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/tasteWidget.json?normalize=false`,
       options
     )
@@ -37,6 +37,16 @@ const recipeApi = {
       .then((response) => response.recipes)
       .catch((err) => console.error(err));
   },
+
+  searchForIngredients: async (search) => {
+    return await fetch(
+      `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/autocomplete?query=${search}&number=10`,
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => response)
+      .catch((err) => console.error(err));
+  }
 };
 
 export default recipeApi;

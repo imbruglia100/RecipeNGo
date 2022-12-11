@@ -1,10 +1,10 @@
 import React from 'react'
 
 function Card({recipe}) {
+  console.log(recipe)
   return (
-    <div className="m-auto w-[60%] flex bg-orange-300 rounded-xl shadow-md shadow-black border">
-      <div className="w-[50%] h-full border-r-4 border-red-400">
-        <p className="absolute">{recipe?.title}</p>
+    <div className="ml-auto mr-auto w-[60%] flex mt-10 bg-[#ffc6c1] rounded-xl shadow-md shadow-black border">
+      <div className="w-[50%] h-full border-r-4 ">
         <img
           className=" w-full h-full rounded-l-xl object-cover"
           src={recipe?.image}
@@ -12,12 +12,21 @@ function Card({recipe}) {
         />
       </div>
       <div className="flex-col p-2 w-full">
-        <p className='text-2xl font-bold'>Ingredients</p>
+        <p className="text-lg font-bold">{recipe?.title}</p>
+        <p className="text-lg font-bold">Have:</p>
         <ul className="p-2">
-          {recipe?.extendedIngredients.map((ing) => {
+          {recipe?.usedIngredients.map((ing) => {
             return (
               <li className="" key={ing?.id}>
-                - {ing?.originalName} Amount: {ing?.amount}
+                - {ing?.name} Amount: {ing?.amount}
+              </li>
+            );
+          })}
+          <p className="text-lg font-bold">Missing:</p>
+          {recipe?.missedIngredients.map((ing) => {
+            return (
+              <li className="" key={ing?.id}>
+                - {ing?.name} Amount: {ing?.amount}
               </li>
             );
           })}
