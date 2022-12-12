@@ -1,9 +1,8 @@
 import React from 'react'
 
 function Card({recipe}) {
-  console.log(recipe)
   return (
-    <div className="ml-auto mr-auto w-[60%] flex mt-10 bg-[#ffc6c1] rounded-xl shadow-md shadow-black border">
+    <div className="ml-auto mr-auto w-[60%] flex mt-10 text-white bg-slate-800 rounded-xl shadow-md shadow-black border">
       <div className="w-[50%] h-full border-r-4 ">
         <img
           className=" w-full h-full rounded-l-xl object-cover"

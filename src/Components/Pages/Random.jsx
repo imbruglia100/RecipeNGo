@@ -9,11 +9,11 @@ function Random() {
   const handleClick = async () => {
     
     setRandomRecipe(await recipeApi.getRandom())
-
+    console.log(randomRecipe)
   }
   return (
     <div className=" flex flex-col h-screen w-screen">
-      {randomRecipe && <Card recipe={randomRecipe[0]}/>}
+      {randomRecipe.length > 0 && <Card recipe={randomRecipe[0]}/>}
       <button className='border rounded-full p-4 m-auto h-11' onClick={handleClick}>
         <p className='h-full w-full m-auto'>Random</p>
       </button>

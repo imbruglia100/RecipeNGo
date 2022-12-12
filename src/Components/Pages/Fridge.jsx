@@ -50,15 +50,24 @@ function Fridge() {
             <ul className="absolute top-[100%] w-full p-1 ">
               {searchedIngredients.length > 0 &&
                 searchedIngredients.map((ele) => {
-                  return (
-                    <button
-                      key={ele.name}
-                      onClick={handleSetIngredients}
+                  if(ele.name)
+                  {
+                    return (
+                      <button
+                        key={ele.name}
+                        onClick={handleSetIngredients}
+                        className="bg-white border-b-2 m-auto first:rounded-t-lg last:rounded-b-lg w-full"
+                      >
+                        {ele.name}
+                      </button>
+                    );
+                  } else {
+                    return (<div
                       className="bg-white border-b-2 m-auto first:rounded-t-lg last:rounded-b-lg w-full"
                     >
-                      {ele.name}
-                    </button>
-                  );
+                      No results...
+                    </div>)
+                  }
                 })}
             </ul>
           }
