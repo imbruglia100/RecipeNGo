@@ -1,8 +1,8 @@
 const options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": "699bcbd3e6msh2e191c511d29987p132ec2jsn5bb54351c4f8",
-    "X-RapidAPI-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+    "X-RapidAPI-Key": process.env.REACT_APP_API_KEY,
+    "X-RapidAPI-Host": process.env.REACT_APP_HOST_URL,
   },
 };
 
@@ -18,7 +18,7 @@ const recipeApi = {
   },
 
   getByIngredients: async (ingredients) => {
-    const querySearchIngredients = ingredients.join("%2C").split(" ").join('');
+    const querySearchIngredients = ingredients.join("%2C").split(" ").join("");
     return await fetch(
       `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients=${querySearchIngredients}&number=5&ignorePantry=true&ranking=1`,
       options
@@ -28,13 +28,14 @@ const recipeApi = {
       .catch((err) => console.error(err));
   },
 
-  getById: async (id) => {
+  getById: async (ids) => {
+    const queryIds = ids.join("%2C%20").split(" ").join("");
     return await fetch(
-      `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/tasteWidget.json?normalize=false`,
+      `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=${queryIds}`,
       options
     )
       .then((response) => response.json())
-      .then((response) => response.recipes)
+      .then((response) => response)
       .catch((err) => console.error(err));
   },
 
@@ -46,7 +47,7 @@ const recipeApi = {
       .then((response) => response.json())
       .then((response) => response)
       .catch((err) => console.error(err));
-  }
+  },
 };
 
 export default recipeApi;

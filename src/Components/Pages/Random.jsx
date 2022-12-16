@@ -2,20 +2,23 @@ import React, { useState } from 'react'
 import recipeApi from '../../Api/Api'
 import Card from '../Card'
 
-function Random() {
+function Random({setFavorites, favorites}) {
 
-  const [randomRecipe, setRandomRecipe] = useState('')
+  const [randomRecipe, setRandomRecipe] = useState({})
 
   const handleClick = async () => {
     
     setRandomRecipe(await recipeApi.getRandom())
-    console.log(randomRecipe)
+
   }
   return (
-    <div className=" flex flex-col h-screen w-screen">
-      {randomRecipe.length > 0 && <Card recipe={randomRecipe[0]}/>}
-      <button className='border rounded-full p-4 m-auto h-11' onClick={handleClick}>
-        <p className='h-full w-full m-auto'>Random</p>
+    <div className=" flex flex-col w-screen mt-[5%]">
+      {randomRecipe.length > 0 && (
+        <Card setFavorites={setFavorites} favorites={favorites} recipe={randomRecipe[0]} />
+      )}
+
+      <button className="border rounded-full p-3 w-fit ml-auto mr-auto mt-6 bg-slate-500" onClick={handleClick}>
+        Random
       </button>
     </div>
   );

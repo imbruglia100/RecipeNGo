@@ -1,9 +1,12 @@
 import React from 'react'
 
-function Card({recipe}) {
+import FavoriteBtn from './FavoriteBtn'
+
+function Card({recipe, setFavorites, favorites}) {
+
   return (
-    <div className="ml-auto mr-auto w-[60%] flex mt-10 text-white bg-slate-800 rounded-xl shadow-md shadow-black border">
-      <div className="w-[50%] h-full border-r-4 ">
+    <div className="ml-auto mr-auto w-[60%] flex mt-10 text-white bg-slate-800 rounded-xl shadow-md shadow-black">
+      <div className="w-auto h-auto border-r-4 ">
         <img
           className=" w-full h-full rounded-l-xl object-cover"
           src={recipe?.image}
@@ -11,29 +14,42 @@ function Card({recipe}) {
         />
       </div>
       <div className="flex-col p-2 w-full">
-        <p className="text-lg font-bold">{recipe?.title}</p>
-        <p className="text-lg font-bold">Have:</p>
+        <p className="text-lg font-bold italic">{recipe?.title}</p>
         <ul className="p-2">
-          {recipe?.usedIngredients.map((ing) => {
-            return (
-              <li className="" key={ing?.id}>
-                - {ing?.name} Amount: {ing?.amount}
-              </li>
-            );
-          })}
-          <p className="text-lg font-bold">Missing:</p>
-          {recipe?.missedIngredients.map((ing) => {
-            return (
-              <li className="" key={ing?.id}>
-                - {ing?.name} Amount: {ing?.amount}
-              </li>
-            );
-          })}
-        </ul>
+          {recipe.missedIngredients ? (
+            <p className="text-lg font-bold">Missing:</p>
+          ) : (
+            <p className="text-lg font-bold">Ingredients:</p>
+          )}
 
-        <button className="rounded-xl p-2 text-white bg-slate-700 justify-end">
-          Learn More
-        </button>
+          {recipe.missedIngredients
+            ? recipe?.missedIngredients?.map((ing, i) => {
+                return (
+                  <li key={ing?.id * i}>
+                    - {ing?.name} / Amount: {ing?.amount}
+                  </li>
+                );
+              })
+            : recipe?.extendedIngredients?.map((ing, i) => {
+                return (
+                  <li key={ing?.id * i}>
+                    - {ing?.name} / Amount: {ing?.amount} {ing?.unit}
+                  </li>
+                );
+              })}
+        </ul>
+        <div className="flex w-full justify-between">
+          
+            <button className="rounded-xl p-2 text-white bg-slate-700 mt-auto mb-auto">
+              Learn More
+            </button>
+
+          <FavoriteBtn
+            setFavorites={setFavorites}
+            favorites={favorites}
+            recipe={recipe}
+          />
+        </div>
       </div>
     </div>
   );
