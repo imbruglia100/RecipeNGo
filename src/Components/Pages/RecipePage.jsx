@@ -17,10 +17,9 @@ function RecipePage({favorites, setFavorites}) {
     }, [id])
 
     useEffect(() => {
+      handleInitialLoad();
+    }, [id, handleInitialLoad]);
 
-        handleInitialLoad()
-        
-    },[id])
     console.log(recipe)
   return (
     <div className="w-[90%] h-fit flex flex-col m-auto mt-20">
@@ -119,7 +118,7 @@ function RecipePage({favorites, setFavorites}) {
         {recipe.analyzedInstructions &&
           recipe?.analyzedInstructions[0]?.steps.map((inst) => {
             return (
-              <span className="text-white m-4 text-lg">
+              <span key={inst.number} className="text-white m-4 text-lg">
                 {inst?.number}. {inst?.step}
               </span>
             );

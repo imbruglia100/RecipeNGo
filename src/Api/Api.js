@@ -18,7 +18,7 @@ const recipeApi = {
   },
 
   getByIngredients: async (ingredientList) => {
-    const querySearchIngredients = ingredientList.join().split(" ").join("");
+    const querySearchIngredients = ingredientList.join("$C2").split(" ").join("");
     return await fetch(
       `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients=${querySearchIngredients}&number=5&ranking=1`,
       options
