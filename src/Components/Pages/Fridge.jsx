@@ -2,50 +2,55 @@ import React, {useEffect, useState} from 'react'
 import Recipes from '../Recipes'
 import recipeApi from '../../Api/Api'
 
-function Fridge({setFavorites}) {
+function Fridge({setFavorites, favorites}) {
 
   const [search, setSearch] = useState('');
-  const [ingredients, setIngredients] = useState([])
+  const [ingredientList, setIngredientList] = useState([])
   const [searchedIngredients, setSearchedIngredients] = useState([])
   const [recipes, setRecipes] = useState([])
 
+  //When input changes we will update the ingredient search query
   const handleChange = (e) => { 
     setSearch(e.target.value)
   }
 
+  //this will add an ingredient to the list we have in our fridge
   const handleSetIngredients = (e) => {
-    setIngredients( prev => [...prev, e.target.innerText])
+    setIngredientList( (prev) => [...prev, e.target.innerText])
   }
 
+  //this will remove an ingredient in our list
   const handleRemoveIngredients = (e) => {
-    console.log(e)
-    setIngredients( prev => prev.filter(ele => ele !== e.target.id))
+    setIngredientList( (prev) => prev.filter(ele => ele !== e.target.id))
   }
 
+  //Here we will fetch for ingredients and set the searched ingredients to an array of objs
   const handleSearch = async (search) => {
     const quer = await recipeApi
       .searchForIngredients(search);
     setSearchedIngredients(quer)
   }
 
-  const getRecipies = async (ingredients) => {
-    const quer = await recipeApi
-      .getByIngredients(ingredients)
-      
+  //then we fetch for recipes from our ingreidents when our list changes
+  const getRecipes = async (ingredientList) => {
+    const quer = await recipeApi.getByIngredients(ingredientList);
     setRecipes(quer)
   }
-
+  
+  //call handle search when search changes; this will update fetch ingredients
   useEffect( () => {
     if(search){
     handleSearch(search)
   }
   }, [search])
 
+  //this will fetch recipes when ingredient list changes
   useEffect(() => {
-    if(ingredients.length > 0){
-    getRecipies(ingredients);
-  }
-  }, [ingredients]);
+    if(ingredientList.length > 0)
+    {
+      getRecipes(ingredientList);
+    }
+  }, [ingredientList]);
 
   return (
     <div className="bg-slate-900 w-screen flex flex-col lg:flex-row md:flex-row">
@@ -63,8 +68,7 @@ function Fridge({setFavorites}) {
             <ul className="absolute top-[100%] w-full p-1 ">
               {searchedIngredients.length > 0 &&
                 searchedIngredients.map((ele) => {
-                  if(ele.name)
-                  {
+                  if (ele.name) {
                     return (
                       <button
                         key={ele.name}
@@ -75,11 +79,11 @@ function Fridge({setFavorites}) {
                       </button>
                     );
                   } else {
-                    return (<div
-                      className="bg-white border-b-2 m-auto first:rounded-t-lg last:rounded-b-lg w-full"
-                    >
-                      No results...
-                    </div>)
+                    return (
+                      <div className="bg-white border-b-2 m-auto first:rounded-t-lg last:rounded-b-lg w-full">
+                        No results...
+                      </div>
+                    );
                   }
                 })}
             </ul>
@@ -88,9 +92,12 @@ function Fridge({setFavorites}) {
         <div className="bg-slate-700 w-[40%] text-white p-5">
           <p className="ml-auto mr-auto w-fit pb-2">Ingredient List</p>
           <div>
-            {ingredients?.map((ing, i) => {
+            {ingredientList?.map((ing, i) => {
               return (
-                <li className="flex justify-between group border-t-[1px] border-slate-500 p-[3px]" key={i}>
+                <li
+                  className="flex justify-between group border-t-[1px] border-slate-500 p-[3px]"
+                  key={i}
+                >
                   {ing}
                   <button
                     id={ing}
@@ -106,10 +113,11 @@ function Fridge({setFavorites}) {
         </div>
       </div>
 
-      {ingredients.length > 0 && (
+      {ingredientList.length > 0 && (
         <Recipes
           recipes={recipes}
           setFavorites={setFavorites}
+          favorites={favorites}
           className="border-l-4 border-slate-600 w-full mt-28 flex flex-col [&>*]:ml-auto [&>*]:mr-auto"
         />
       )}

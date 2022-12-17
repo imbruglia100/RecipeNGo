@@ -7,6 +7,7 @@ import Fridge from "./Components/Pages/Fridge";
 import Random from "./Components/Pages/Random";
 import Favorite from "./Components/Pages/Favorite";
 import ExploreRecipes from "./Components/Pages/ExploreRecipes";
+import RecipePage from "./Components/Pages/RecipePage";
 
 
 function App() {
@@ -22,21 +23,22 @@ function App() {
           className="absolute right-5 top-[-45px] hover:scale-110 duration-100"
         />
         <Routes>
-          <Route path="/" element={<Fridge favorites={favorites} setFavorites={setFavorites} />} />
+          <Route
+            path="/"
+            element={
+              <Fridge favorites={favorites} setFavorites={setFavorites} />
+            }
+          />
           <Route
             path="/random"
             element={
-              <Random 
-                favorites={favorites} 
-                setFavorites={setFavorites} />
+              <Random favorites={favorites} setFavorites={setFavorites} />
             }
           />
           <Route
             path="/favorite"
             element={
-              <Favorite 
-                favorites={favorites} 
-                setFavorites={setFavorites} />
+              <Favorite favorites={favorites} setFavorites={setFavorites} />
             }
           />
           <Route
@@ -45,6 +47,15 @@ function App() {
               <ExploreRecipes
                 favorites={favorites}
                 setFavorites={setFavorites}
+              />
+            }
+          />
+          <Route
+            path="/recipes/:id"
+            element={
+              <RecipePage 
+                favorites={favorites} 
+                setFavorites={setFavorites} 
               />
             }
           />

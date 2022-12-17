@@ -9,8 +9,8 @@ function Favorite({favorites, setFavorites}) {
   
 
   const handleSetFavorites = useCallback(async (favorites) => {
-    favorites.length > 0 &&
-    setFavoriteRecipes(await recipeApi.getById(favorites))
+    
+    setFavoriteRecipes(await recipeApi.getByIds(favorites))
   },[])
 
   useEffect(()=>{

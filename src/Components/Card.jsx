@@ -2,6 +2,8 @@ import React from 'react'
 
 import FavoriteBtn from './FavoriteBtn'
 
+import { Link } from 'react-router-dom';
+
 function Card({recipe, setFavorites, favorites}) {
 
   return (
@@ -40,9 +42,9 @@ function Card({recipe, setFavorites, favorites}) {
         </ul>
         <div className="flex w-full justify-between">
           
-            <button className="rounded-xl p-2 text-white bg-slate-700 mt-auto mb-auto">
+            <Link to={'/recipes/' + recipe.id} className="rounded-xl p-2 text-white bg-slate-700 mt-auto mb-auto">
               Learn More
-            </button>
+            </Link>
 
           <FavoriteBtn
             setFavorites={setFavorites}
