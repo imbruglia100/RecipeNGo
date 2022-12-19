@@ -26,15 +26,13 @@ function Fridge({setFavorites, favorites}) {
 
   //Here we will fetch for ingredients and set the searched ingredients to an array of objs
   const handleSearch = async (search) => {
-    const quer = await recipeApi
-      .searchForIngredients(search);
-    setSearchedIngredients(quer)
+    setSearchedIngredients(await recipeApi
+      .searchForIngredients(search))
   }
 
   //then we fetch for recipes from our ingreidents when our list changes
   const getRecipes = async (ingredientList) => {
-    const quer = await recipeApi.getByIngredients(ingredientList);
-    setRecipes(quer)
+    setRecipes(await recipeApi.getByIngredients(ingredientList))
   }
   
   //call handle search when search changes; this will update fetch ingredients
@@ -46,16 +44,14 @@ function Fridge({setFavorites, favorites}) {
 
   //this will fetch recipes when ingredient list changes
   useEffect(() => {
-    if(ingredientList.length > 0)
-    {
+    ingredientList.length > 0 &&
       getRecipes(ingredientList);
-    }
   }, [ingredientList]);
 
   return (
     <div className="bg-slate-900 w-screen flex flex-col lg:flex-row md:flex-row">
       <div className="flex flex-col w-full [&>*]:mt-10 [&>*]:ml-auto [&>*]:mr-auto mt-28">
-        <p className="text-5xl font-semibold text-slate-200">
+        <p className="text-5xl text-center font-semibold text-slate-200">
           What's in your fridge?
         </p>
         <form className="flex relative w-fit h-fit">
