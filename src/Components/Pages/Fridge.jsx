@@ -32,21 +32,19 @@ function Fridge({setFavorites, favorites}) {
 
   //then we fetch for recipes from our ingreidents when our list changes
   const getRecipes = async (ingredientList) => {
-    setRecipes(await recipeApi.getByIngredients(ingredientList))
+    const queryArr = await recipeApi.getByIngredients(ingredientList);
+    setRecipes(queryArr)
   }
   
   //call handle search when search changes; this will update fetch ingredients
   useEffect( () => {
-    if(search){
     handleSearch(search)
-  }
   }, [search])
 
   //this will fetch recipes when ingredient list changes
-  useEffect(() => {
-    ingredientList.length > 0 &&
-      getRecipes(ingredientList);
-  }, [ingredientList]);
+   useEffect(() => {
+    getRecipes(ingredientList);
+   }, [ingredientList]);
 
   return (
     <div className="bg-slate-900 w-screen flex flex-col lg:flex-row md:flex-row">
@@ -66,13 +64,13 @@ function Fridge({setFavorites, favorites}) {
                 searchedIngredients.map((ele) => {
                   if (ele.name) {
                     return (
-                      <button
+                      <li
                         key={ele.name}
                         onClick={handleSetIngredients}
                         className="bg-white border-b-2 m-auto first:rounded-t-lg last:rounded-b-lg w-full"
                       >
                         {ele.name}
-                      </button>
+                      </li>
                     );
                   } else {
                     return (
@@ -109,7 +107,7 @@ function Fridge({setFavorites, favorites}) {
         </div>
       </div>
 
-      {ingredientList.length > 0 && (
+      {recipes.length > 0 && (
         <Recipes
           recipes={recipes}
           setFavorites={setFavorites}

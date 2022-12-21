@@ -20,7 +20,6 @@ function RecipePage({favorites, setFavorites}) {
       handleInitialLoad();
     }, [id, handleInitialLoad]);
 
-    console.log(recipe)
   return (
     <div className="w-[90%] h-fit flex flex-col m-auto mt-20">
       <h1 className="text-5xl text-white font-extrabold text-center">
@@ -29,7 +28,7 @@ function RecipePage({favorites, setFavorites}) {
       <div className="flex flex-row">
         <span className="rounded-full p-2 bg-green-500 flex flex-col text-gray-900 font-bold text-lg">
           <span className="m-auto">Health: </span>
-          <span className="m-auto">{recipe.healthScore}/10</span>
+          <span className="m-auto">{recipe.healthScore}/100</span>
         </span>
         <div className="w-20 ml-auto bg-opacity-50 h-fit bg-white rounded-full">
           <FavoriteBtn
@@ -41,8 +40,9 @@ function RecipePage({favorites, setFavorites}) {
       </div>
 
       <div className="flex flex-col lg:flex-row md:flex-row opa text-white text-lg justify-center m-12 align-middle h-fit">
-        <div className="w-full">
+        <div className="w-full m-2">
           <img
+            draggable="false"
             src={recipe.image}
             className="rounded-lg w-fit"
             alt={"pirctue of " + recipe.title}
@@ -64,7 +64,7 @@ function RecipePage({favorites, setFavorites}) {
             <span>Serves: {recipe.servings}</span>
           </div>
         </div>
-        <div className="w-[100%]">
+        <div className="w-full lg:w-[50%] md:w-[50%] m-auto">
           <span className="text-4xl">Ingredients</span>
           <div className="mb-5 mt-5">
             {recipe?.extendedIngredients?.map((ing) => {

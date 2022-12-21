@@ -34,6 +34,7 @@ function FavoriteBtn({setFavorites, favorites, recipe}) {
   return (
     <div>
       <img
+        draggable={false}
         className="m-auto transition-all duration-150"
         width="40%"
         onClick={handleClick}

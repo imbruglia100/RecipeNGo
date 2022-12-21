@@ -9,7 +9,6 @@ function Favorite({favorites, setFavorites}) {
   
 
   const handleSetFavorites = useCallback(async (favorites) => {
-    
     setFavoriteRecipes(await recipeApi.getByIds(favorites))
   },[])
 

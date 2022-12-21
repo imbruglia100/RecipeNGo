@@ -10,6 +10,7 @@ function Card({recipe, setFavorites, favorites}) {
     <div className="ml-auto mr-auto w-[60%] flex mt-10 text-white bg-slate-800 rounded-xl shadow-md shadow-black">
       <div className="w-auto h-auto border-r-4 ">
         <img
+          draggable={false}
           className=" w-full h-full rounded-l-xl object-cover"
           src={recipe?.image}
           alt={recipe?.title}
@@ -41,10 +42,13 @@ function Card({recipe, setFavorites, favorites}) {
               })}
         </ul>
         <div className="flex w-full justify-between">
-          
-            <Link to={'/recipes/' + recipe.id} className="rounded-xl p-2 text-white bg-slate-700 mt-auto mb-auto">
-              Learn More
-            </Link>
+          <Link
+            to={"/recipes/" + recipe.id}
+            className="rounded-xl p-2 text-white bg-slate-700 mt-auto mb-auto"
+            draggable="false"
+          >
+            Learn More
+          </Link>
 
           <FavoriteBtn
             setFavorites={setFavorites}
