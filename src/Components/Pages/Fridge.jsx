@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useCallback} from 'react'
 import Recipes from '../Recipes'
 import recipeApi from '../../Api/Api'
 
@@ -16,7 +16,7 @@ function Fridge({setFavorites, favorites}) {
 
   //this will add an ingredient to the list we have in our fridge
   const handleSetIngredients = (e) => {
-    setIngredientList( (prev) => [...prev, e.target.innerText])
+      setIngredientList( (prev) => [...prev, e.target.innerText])
   }
 
   //this will remove an ingredient in our list
@@ -25,26 +25,30 @@ function Fridge({setFavorites, favorites}) {
   }
 
   //Here we will fetch for ingredients and set the searched ingredients to an array of objs
-  const handleSearch = async (search) => {
-    setSearchedIngredients(await recipeApi
-      .searchForIngredients(search))
-  }
+  const handleSearch = 
+    useCallback(async () => {
+      console.log("handleSearch Called")
+      setSearchedIngredients(await recipeApi
+        .searchForIngredients(search))
+    }, [search])
 
   //then we fetch for recipes from our ingreidents when our list changes
-  const getRecipes = async (ingredientList) => {
-    const queryArr = await recipeApi.getByIngredients(ingredientList);
-    setRecipes(queryArr)
-  }
+  const getRecipes = useCallback( 
+      async () => {
+        console.log("getRecipes Called")
+        const queryArr = await recipeApi.getByIngredients(ingredientList);
+        setRecipes(queryArr)
+      }, [ingredientList])
   
   //call handle search when search changes; this will update fetch ingredients
   useEffect( () => {
-    handleSearch(search)
-  }, [search])
+    handleSearch()
+  }, [handleSearch])
 
   //this will fetch recipes when ingredient list changes
    useEffect(() => {
-    getRecipes(ingredientList);
-   }, [ingredientList]);
+    getRecipes();
+   }, [getRecipes]);
 
   return (
     <div className="bg-slate-900 w-screen flex flex-col lg:flex-row md:flex-row">
@@ -52,14 +56,14 @@ function Fridge({setFavorites, favorites}) {
         <p className="text-5xl text-center font-semibold text-slate-200">
           What's in your fridge?
         </p>
-        <form className="flex relative w-fit h-fit">
+        <form className="flex group relative w-fit h-fit">
           <input
             onChange={handleChange}
             placeholder="Search ingredient"
-            className="border-2 text-white bg-slate-800 w-[197px] h-[38px] p-1.5 rounded-3xl border-gray-900"
+            className="border-2 peer text-white group bg-slate-800 w-[197px] h-[38px] p-1.5 rounded-3xl border-gray-900"
           />
           {
-            <ul className="absolute top-[100%] w-full p-1 ">
+            <ul className="absolute top-[100%] [&>li]:opacity-0 peer-focus:[&>li]:opacity-100 text-center w-full  p-1 ">
               {searchedIngredients.length > 0 &&
                 searchedIngredients.map((ele) => {
                   if (ele.name) {

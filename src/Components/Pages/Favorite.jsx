@@ -4,19 +4,16 @@ import recipeApi from '../../Api/Api';
 
 function Favorite({favorites, setFavorites}) {
 
-
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   
-
-  const handleSetFavorites = useCallback(async (favorites) => {
+  const handleSetFavorites = useCallback(async () => {
     setFavoriteRecipes(await recipeApi.getByIds(favorites))
-  },[])
+  },[favorites])
 
   useEffect(()=>{
-  
-   handleSetFavorites(favorites)
-    
-  },[favorites, handleSetFavorites])
+   handleSetFavorites()
+  },[handleSetFavorites])
+
   return (
     <div className="bg-slate-900 flex justify-center w-screen h-screen">
       {favoriteRecipes.length > 0 ? (
