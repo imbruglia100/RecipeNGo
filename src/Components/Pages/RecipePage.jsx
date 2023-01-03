@@ -19,7 +19,7 @@ function RecipePage({favorites, setFavorites}) {
     useEffect(() => {
       handleInitialLoad();
     }, [id, handleInitialLoad]);
-
+    console.log(recipe)
   return (
     <div className="w-[90%] h-fit flex flex-col m-auto mt-20">
       <h1 className="text-5xl text-white font-extrabold text-center">

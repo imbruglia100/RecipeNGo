@@ -1,5 +1,4 @@
 import "./App.css";
-import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from "./Components/Sidebar";
 import Logo from "./Components/Logo";
@@ -8,11 +7,13 @@ import Random from "./Components/Pages/Random";
 import Favorite from "./Components/Pages/Favorite";
 import ExploreRecipes from "./Components/Pages/ExploreRecipes";
 import RecipePage from "./Components/Pages/RecipePage";
+import createPersistedState from "use-persisted-state";
 
+const useFavState = createPersistedState("fav");
 
 function App() {
 
-  const [favorites, setFavorites] = useState([])
+  const [favorites, setFavorites] = useFavState([])
   
   return (
     <div className="App flex bg-slate-900">

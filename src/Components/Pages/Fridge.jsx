@@ -1,11 +1,16 @@
 import React, {useEffect, useState, useCallback} from 'react'
 import Recipes from '../Recipes'
 import recipeApi from '../../Api/Api'
+import createPersistedState from "use-persisted-state";
+
+const useFridgeState = createPersistedState('fridge')
 
 function Fridge({setFavorites, favorites}) {
 
+  const [initialRender, setInitialRender] = useState(false)
+
   const [search, setSearch] = useState('');
-  const [ingredientList, setIngredientList] = useState([])
+  const [ingredientList, setIngredientList] = useFridgeState([])
   const [searchedIngredients, setSearchedIngredients] = useState([])
   const [recipes, setRecipes] = useState([])
 
@@ -16,7 +21,13 @@ function Fridge({setFavorites, favorites}) {
 
   //this will add an ingredient to the list we have in our fridge
   const handleSetIngredients = (e) => {
-      setIngredientList( (prev) => [...prev, e.target.innerText])
+    if(!ingredientList.includes(e.target.innerText)){
+      setIngredientList((prev) => [...prev, e.target.innerText]);
+      setSearch("");
+    } else {
+      alert('Ingredient already in your fridge')
+    }
+      
   }
 
   //this will remove an ingredient in our list
@@ -50,6 +61,14 @@ function Fridge({setFavorites, favorites}) {
     getRecipes();
    }, [getRecipes]);
 
+   useEffect(() => {
+    setInitialRender(true)
+   },[])
+
+   if(!initialRender){
+    return null
+   }else{
+
   return (
     <div className="bg-slate-900 w-screen flex flex-col lg:flex-row md:flex-row">
       <div className="flex flex-col w-full [&>*]:mt-10 [&>*]:ml-auto [&>*]:mr-auto mt-28">
@@ -58,6 +77,7 @@ function Fridge({setFavorites, favorites}) {
         </p>
         <form className="flex group relative w-fit h-fit">
           <input
+            value={search}
             onChange={handleChange}
             placeholder="Search ingredient"
             className="border-2 peer text-white group bg-slate-800 w-[197px] h-[38px] p-1.5 rounded-3xl border-gray-900"
@@ -121,6 +141,7 @@ function Fridge({setFavorites, favorites}) {
       )}
     </div>
   );
+}
 }
 
 export default Fridge
