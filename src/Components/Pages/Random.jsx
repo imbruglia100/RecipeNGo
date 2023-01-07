@@ -12,12 +12,13 @@ function Random({setFavorites, favorites}) {
 
   }
   return (
-    <div className=" flex flex-col w-screen mt-[5%]">
+    <div className=" flex flex-col h-screen w-screen">
+
       {randomRecipe.length > 0 && (
         <Card setFavorites={setFavorites} favorites={favorites} recipe={randomRecipe[0]} />
       )}
 
-      <button className="border rounded-full p-3 w-fit ml-auto mr-auto mt-6 bg-slate-500" onClick={handleClick}>
+      <button className="border rounded-full p-3 w-fit m-auto bg-slate-700" onClick={handleClick}>
         Random
       </button>
     </div>

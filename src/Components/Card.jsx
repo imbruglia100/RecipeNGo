@@ -1,7 +1,5 @@
 import React from 'react'
-
 import FavoriteBtn from './FavoriteBtn'
-
 import { Link } from 'react-router-dom';
 
 function Card({recipe, setFavorites, favorites}) {
@@ -17,7 +15,7 @@ function Card({recipe, setFavorites, favorites}) {
         />
       </div>
       <div className="flex-col p-2 w-full">
-        <p className="text-lg font-bold italic">{recipe?.title}</p>
+        <p className="text-lg font-bold text-orange-400">{recipe?.title}</p>
         <ul className="p-2">
           {recipe.missedIngredients ? (
             <p className="text-lg font-bold">Missing:</p>
@@ -27,25 +25,32 @@ function Card({recipe, setFavorites, favorites}) {
 
           {recipe.missedIngredients
             ? recipe?.missedIngredients?.map((ing, i) => {
+              if(i < 4){
                 return (
-                  <li key={ing?.id * i}>
-                    - {ing?.name} / Amount: {ing?.amount}
+                  <li className='pl-2' key={ing?.id * i}>
+                     {ing?.name}
                   </li>
-                );
+                );} else if(i === 4) {
+                  return (<p className='pl-2'>...</p>);
+                } else {return null}
               })
             : recipe?.extendedIngredients?.map((ing, i) => {
-                return (
-                  <li key={ing?.id * i}>
-                    - {ing?.name} / Amount: {ing?.amount} {ing?.unit}
-                  </li>
-                );
+              if (i < 4) {
+                return <li key={ing?.id * i}>- {ing?.name}</li>;
+              } else if (i === 4) {
+                return <p className="pl-2">...</p>;
+              } else {
+                return null;
+              }
+              
               })}
         </ul>
         <div className="flex w-full justify-between">
           <Link
             to={"/recipes/" + recipe.id}
-            className="rounded-xl p-2 text-white bg-slate-700 mt-auto mb-auto"
+            className="rounded-xl whitespace-nowrap p-2 text-white bg-slate-700 mt-auto mb-auto"
             draggable="false"
+
           >
             Learn More
           </Link>

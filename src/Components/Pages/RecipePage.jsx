@@ -71,12 +71,14 @@ function RecipePage({favorites, setFavorites}) {
               return (
                 <li className="" key={ing.id * ing?.amount}>
                   {ing.name}
-                  <span className='ml-5'>{ing?.amount?.toPrecision(2)} {ing?.unit}</span>
+                  <span className="ml-5">
+                    {ing?.amount?.toPrecision(2)} {ing?.unit}
+                  </span>
                 </li>
               );
             })}
           </div>
-          <div className='[&>*]:ml-2'>
+          <div className="[&>*]:ml-2 [&>*]:whitespace-nowrap">
             {recipe?.vegan && (
               <span className="bg-orange-500 p-1 text-sm text-black rounded-full">
                 Vegan
