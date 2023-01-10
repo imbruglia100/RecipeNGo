@@ -10,7 +10,7 @@ function Sidebar() {
   return (
     <div
       id="sideBar"
-      className="fixed transition-all [&>*]:m-auto [&>*]:p-4 duration-100 h-screen w-10 bg-[#7EFFE0] scroll overflow-hidden lg:flex flex-col lg:hover:w-1/12 md:flex md:hover:w-1/6 hidden"
+      className="fixed transition-all [&>*]:m-auto [&>*]:p-4 duration-100 lg:h-screen md:h-screen sm:w-screen lg:w-10 md:w-10 bottom-0 bg-[#7EFFE0] scroll overflow-hidden lg:flex lg:flex-col lg:hover:w-1/12 md:flex md:flex-col md:hover:w-1/6 flex"
     >
       <Link
         draggable="false"

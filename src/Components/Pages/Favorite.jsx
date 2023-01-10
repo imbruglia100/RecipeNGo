@@ -20,7 +20,7 @@ function Favorite({favorites, setFavorites}) {
         <Recipes setFavorites={setFavorites} favorites={favorites} recipes={favoriteRecipes} />
       ) : (
         
-          <span className="text-4xl m-auto text-slate-300">
+          <span className="text-4xl m-auto text-center text-slate-300">
             You have no favorites! Check out the other tabs to find some
             recipes!
           </span>

@@ -107,6 +107,7 @@ function Fridge({setFavorites, favorites}) {
             </ul>
           }
         </form>
+        {ingredientList.length > 0 &&
         <div className="bg-slate-700 w-[40%] text-white p-5">
           <p className="ml-auto mr-auto w-fit pb-2">Ingredient List</p>
           <div>
@@ -129,6 +130,7 @@ function Fridge({setFavorites, favorites}) {
             })}
           </div>
         </div>
+        }
       </div>
 
       {recipes.length > 0 && (
@@ -136,7 +138,7 @@ function Fridge({setFavorites, favorites}) {
           recipes={recipes}
           setFavorites={setFavorites}
           favorites={favorites}
-          className="border-l-4 border-slate-600 w-full mt-28 flex flex-col [&>*]:ml-auto [&>*]:mr-auto"
+          className="lg:border-l-4 md:border-l-4 border-slate-600 w-full mt-28 flex flex-col [&>*]:ml-auto [&>*]:mr-auto"
         />
       )}
     </div>
