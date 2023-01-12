@@ -15,7 +15,7 @@ function Favorite({favorites, setFavorites}) {
   },[handleSetFavorites])
 
   return (
-    <div className="bg-slate-900 flex justify-center w-screen mt-28 h-screen">
+    <div className="bg-slate-900 flex justify-center w-screen mt-28 mb-20 h-screen">
       {favoriteRecipes.length > 0 ? (
         <Recipes setFavorites={setFavorites} favorites={favorites} recipes={favoriteRecipes} />
       ) : (
