@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 function Card({recipe, setFavorites, favorites}) {
 
   return (
-    <div className="ml-auto mr-auto w-[60%] flex mt-10 text-white bg-slate-800 rounded-xl shadow-md shadow-black">
+    <div className="ml-auto mr-auto mt-10 w-fit h-fit lg:w-6/12 md:w-6/12 flex text-white bg-slate-800 rounded-xl shadow-md shadow-black">
       <div className="w-auto h-auto border-r-4 ">
         <img
           draggable={false}
@@ -15,7 +15,7 @@ function Card({recipe, setFavorites, favorites}) {
         />
       </div>
       <div className="flex-col p-2 w-full">
-        <p className="text-lg font-bold text-orange-400">{recipe?.title}</p>
+        <p className="text-lg font-bold text-orange-400 ">{recipe?.title}</p>
         <ul className="p-2">
           {recipe.missedIngredients ? (
             <p className="text-lg font-bold">Missing:</p>
@@ -27,18 +27,22 @@ function Card({recipe, setFavorites, favorites}) {
             ? recipe?.missedIngredients?.map((ing, i) => {
               if(i < 4){
                 return (
-                  <li className='pl-2' key={ing?.id * i}>
+                  <li className='pl-2' key={ing?.id}>
                      {ing?.name}
                   </li>
                 );} else if(i === 4) {
-                  return (<p className='pl-2'>...</p>);
+                  return <p className="pl-2 text-sm text-gray-500 pt-5">Click below for more</p>;
                 } else {return null}
               })
             : recipe?.extendedIngredients?.map((ing, i) => {
               if (i < 4) {
-                return <li key={ing?.id * i}>- {ing?.name}</li>;
+                return <li key={ing?.id}>- {ing?.name}</li>;
               } else if (i === 4) {
-                return <p className="pl-2">...</p>;
+                return (
+                  <p className="pl-2 text-sm text-gray-500 pt-5">
+                    Click below for more
+                  </p>
+                );
               } else {
                 return null;
               }
@@ -48,7 +52,7 @@ function Card({recipe, setFavorites, favorites}) {
         <div className="flex w-full justify-between">
           <Link
             to={"/recipes/" + recipe.id}
-            className="rounded-xl whitespace-nowrap p-2 text-white bg-slate-700 mt-auto mb-auto"
+            className="rounded-full whitespace-nowrap p-2 text-white bg-slate-700 mt-auto mb-auto"
             draggable="false"
 
           >

@@ -2,6 +2,7 @@ import React, {useEffect, useState, useCallback} from 'react'
 import Recipes from '../Recipes'
 import recipeApi from '../../Api/Api'
 import createPersistedState from "use-persisted-state";
+import useDebounceValue from '../useDebounceValue';
 
 const useFridgeState = createPersistedState('fridge')
 
@@ -10,6 +11,7 @@ function Fridge({setFavorites, favorites}) {
   const [initialRender, setInitialRender] = useState(false)
 
   const [search, setSearch] = useState('');
+  const debounceSearch = useDebounceValue(search)
   const [ingredientList, setIngredientList] = useFridgeState([])
   const [searchedIngredients, setSearchedIngredients] = useState([])
   const [recipes, setRecipes] = useState([])
@@ -27,7 +29,6 @@ function Fridge({setFavorites, favorites}) {
     } else {
       alert('Ingredient already in your fridge')
     }
-      
   }
 
   //this will remove an ingredient in our list
@@ -38,15 +39,13 @@ function Fridge({setFavorites, favorites}) {
   //Here we will fetch for ingredients and set the searched ingredients to an array of objs
   const handleSearch = 
     useCallback(async () => {
-      console.log("handleSearch Called")
       setSearchedIngredients(await recipeApi
-        .searchForIngredients(search))
-    }, [search])
+        .searchForIngredients(debounceSearch))
+    }, [debounceSearch])
 
   //then we fetch for recipes from our ingreidents when our list changes
   const getRecipes = useCallback( 
       async () => {
-        console.log("getRecipes Called")
         const queryArr = await recipeApi.getByIngredients(ingredientList);
         setRecipes(queryArr)
       }, [ingredientList])
@@ -71,7 +70,7 @@ function Fridge({setFavorites, favorites}) {
 
   return (
     <div className="bg-slate-900 w-screen flex flex-col lg:flex-row md:flex-row">
-      <div className="flex flex-col w-full [&>*]:mt-10 [&>*]:ml-auto [&>*]:mr-auto mt-28">
+      <div className="flex flex-col w-full [&>*]:mt-10 [&>*]:ml-auto [&>*]:mr-auto mt-16">
         <p className="text-5xl text-center font-semibold text-slate-200">
           What's in your fridge?
         </p>
@@ -108,20 +107,20 @@ function Fridge({setFavorites, favorites}) {
           }
         </form>
         {ingredientList.length > 0 &&
-        <div className="bg-slate-700 w-[40%] text-white p-5">
-          <p className="ml-auto mr-auto w-fit pb-2">Ingredient List</p>
-          <div>
+        <div className="bg-slate-700 w-[80%] lg:w-[40%] md:w-[40%] text-white p-5">
+          <p className="ml-auto mr-auto w-fit text-2xl pb-2">Ingredient List</p>
+          <div className='even:bg-slate-600'>
             {ingredientList?.map((ing, i) => {
               return (
                 <li
-                  className="flex justify-between group border-t-[1px] border-slate-500 p-[3px]"
+                  className="flex justify-center group border-t-[1px] border-slate-500 p-4 text-lg"
                   key={i}
                 >
                   {ing}
                   <button
                     id={ing}
                     onClick={handleRemoveIngredients}
-                    className="text-red-400 hidden group-hover:block"
+                    className="text-red-400 hidden text-lg pl-2 group-hover:block"
                   >
                     X
                   </button>
@@ -138,7 +137,7 @@ function Fridge({setFavorites, favorites}) {
           recipes={recipes}
           setFavorites={setFavorites}
           favorites={favorites}
-          className="lg:border-l-4 md:border-l-4 border-slate-600 w-full mt-28 flex flex-col [&>*]:ml-auto [&>*]:mr-auto"
+          className="lg:border-l-4 overflow-y-scroll md:border-l-4 border-slate-600 h-screen w-full mt-28 mb-20 flex flex-col [&>*]:ml-auto [&>*]:mr-auto"
         />
       )}
     </div>

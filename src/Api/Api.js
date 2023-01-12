@@ -58,6 +58,16 @@ const recipeApi = {
       .then((response) => response)
       .catch((err) => console.error(err));
   },
+  
+  searchForRecipes: async (search) => {
+    return await fetch(
+      `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete?query=${search}&number=10`,
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => response)
+      .catch((err) => console.error(err));
+  }
 };
 
 export default recipeApi;
