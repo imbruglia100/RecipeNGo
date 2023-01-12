@@ -106,30 +106,32 @@ function Fridge({setFavorites, favorites}) {
             </ul>
           }
         </form>
-        {ingredientList.length > 0 &&
-        <div className="bg-slate-700 w-[80%] lg:w-[40%] md:w-[40%] text-white p-5">
-          <p className="ml-auto mr-auto w-fit text-2xl pb-2">Ingredient List</p>
-          <div className='even:bg-slate-600'>
-            {ingredientList?.map((ing, i) => {
-              return (
-                <li
-                  className="flex justify-center group border-t-[1px] border-slate-500 p-4 text-lg"
-                  key={i}
-                >
-                  {ing}
-                  <button
-                    id={ing}
-                    onClick={handleRemoveIngredients}
-                    className="text-red-400 hidden text-lg pl-2 group-hover:block"
+        {ingredientList.length > 0 && (
+          <div className="bg-slate-700 w-[80%] lg:w-[40%] md:w-[40%] text-white p-5">
+            <p className="ml-auto mr-auto w-fit text-2xl pb-2">
+              Ingredient List
+            </p>
+            <div className="even:bg-slate-600">
+              {ingredientList?.map((ing, i) => {
+                return (
+                  <li
+                    className="flex justify-center group border-t-[1px] border-slate-500 p-4 text-lg"
+                    key={i}
                   >
-                    X
-                  </button>
-                </li>
-              );
-            })}
+                    {ing}
+                    <button
+                      id={ing}
+                      onClick={handleRemoveIngredients}
+                      className="text-red-400 hidden text-lg pl-2 group-hover:block"
+                    >
+                      X
+                    </button>
+                  </li>
+                );
+              })}
+            </div>
           </div>
-        </div>
-        }
+        )}
       </div>
 
       {recipes.length > 0 && (
@@ -137,7 +139,7 @@ function Fridge({setFavorites, favorites}) {
           recipes={recipes}
           setFavorites={setFavorites}
           favorites={favorites}
-          className="lg:border-l-4 overflow-y-scroll md:border-l-4 border-slate-600 h-screen w-full mt-28 mb-20 flex flex-col [&>*]:ml-auto [&>*]:mr-auto"
+          className="lg:border-l-4 lg:overflow-y-scroll md:overflow-y-scroll md:border-l-4 border-slate-600 h-screen w-full mt-28 mb-20 flex flex-col [&>*]:ml-auto [&>*]:mr-auto"
         />
       )}
     </div>
