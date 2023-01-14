@@ -59,9 +59,9 @@ const recipeApi = {
       .catch((err) => console.error(err));
   },
   
-  searchForRecipes: async (search) => {
+  searchForRecipes: async (filter) => {
     return await fetch(
-      `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete?query=${search}&number=10`,
+      `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?query=${filter?.query}&cuisine=${filter?.cuisine}&diet=${filter?.diet}&type=${filter?.type}&fillIngredients=true&sort=${filter?.sort}&sortDirection=desc&offset=0&number=10&limitLicense=true`,
       options
     )
       .then((response) => response.json())
